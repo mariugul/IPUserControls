@@ -4,15 +4,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ip="clr-namespace:IPUserControls;assembly=IPUserControls"
+        xmlns:ipUserControls="clr-namespace:IPUserControls;assembly=IPUserControls.Wpf"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Test Window" Height="133.333" Width="318.933" >
     <Grid>
         <StackPanel Orientation="Horizontal">
             <Label Content="NCU" />
-            <ip:IpField VerticalAlignment="Top"/>
-            <ip:IpPort  />
-            <ip:IpStatus VerticalAlignment="Top" Width="40" />
+            <ipUserControls:IpField VerticalAlignment="Top"/>
+            <ipUserControls:IpPort  />
+            <ipUserControls:IpStatus VerticalAlignment="Top" Width="40" />
         </StackPanel>
     </Grid>
 </Window>
