@@ -4,9 +4,9 @@
 ## Controls Included
 | **Controls**  | **Description**      | Bindable Property   |
 | ------------- |----------------------| ------------------- | 
-| IpField       | IP Address TextBox   | IP string or byte[] |
-| IpPort        | IP Port TextBox      | IP port number      |
-| IpStatus      | IP Connection Status | Connection Status
+| IpField       | IP Address TextBox   | string or byte[]    |
+| IpPort        | IP Port TextBox      | ushort              |
+| IpStatus      | IP Connection Status | Connection Status   |
 
  
 ## Usage
