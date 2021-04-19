@@ -1,12 +1,12 @@
-# WPF IPUserControls
+# IPUserControls.WPF
  With these controls you get an IP Address Text Box, IP Port Text Box and IP Connection Status Icon. Combine them together for a complete IP connection control.
  
 ## Controls Included
-| **Controls**  | **Description** |
-| ------------- |-------------| 
-| IpField       |  IP Address TextBox 
-| IpPort        | IP Port TextBox | $1600 
-| IpStatus      | IP Connection Status 
+| **Controls**  | **Description**      | Bindable Property   |
+| ------------- |----------------------| ------------------- | 
+| IpField       | IP Address TextBox   | IP string or byte[] |
+| IpPort        | IP Port TextBox      | IP port number      |
+| IpStatus      | IP Connection Status | Connection Status
 
  
 ## Usage
