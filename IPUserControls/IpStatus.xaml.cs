@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace IPUserControls
 {
@@ -25,23 +16,33 @@ namespace IPUserControls
     {
         public IpStatus()
         {
+
             InitializeComponent();
+
+            //Binding MyPropertyHandBinding = new Binding
+            //{
+            //    Path = new PropertyPath(nameof(MyProperty))
+            //};
         }
+    
 
         // Status Image Sources
-        private const string ImageConnected =    "/IPUserControls;component/Images/ip_connected.png";
+        private const string ImageConnected = "/IPUserControls;component/Images/ip_connected.png";
         private const string ImageDisconnected = "/IPUserControls;component/Images/ip_disconnected.png";
-        private const string ImageConnecting =   "/IPUserControls;component/Images/ip_connecting.png";
-        private const string ImageError =        "/IPUserControls;component/Images/ip_error.png";
-
+        private const string ImageConnecting = "/IPUserControls;component/Images/ip_connecting.png";
+        private const string ImageError = "/IPUserControls;component/Images/ip_error.png";
 
         #region Exposed Properties
 
-        #endregion
+    
+
+        #endregion Exposed Properties
+
 
         #region Properties
+
         private bool _inputEnabled = true;
-        
+
         public bool InputEnabled
         {
             get => _inputEnabled;
@@ -76,9 +77,11 @@ namespace IPUserControls
             get => _connectionImageSource;
             set => SetProperty(ref _connectionImageSource, value);
         }
-        #endregion
+
+        #endregion Properties
 
         #region Methods
+
         private void UpdateConnectionImage()
         {
             switch (ConnectionStatus)
@@ -86,22 +89,28 @@ namespace IPUserControls
                 case ConnectionStatus.Connected:
                     ConnectionImageSource = ImageConnected;
                     break;
+
                 case ConnectionStatus.Disconnected:
                     ConnectionImageSource = ImageDisconnected;
                     break;
+
                 case ConnectionStatus.Connecting:
                     ConnectionImageSource = ImageConnecting;
                     break;
+
                 case ConnectionStatus.Error:
                     ConnectionImageSource = ImageError;
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
-        #endregion
+
+        #endregion Methods
 
         #region Events
+
         private void StatusIcon_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             PopupStatusInfo.PlacementTarget = StatusImage;
@@ -115,13 +124,15 @@ namespace IPUserControls
             PopupStatusInfo.Visibility = Visibility.Collapsed;
             PopupStatusInfo.IsOpen = false;
         }
-        #endregion
+
+        #endregion Events
 
         #region Property Notifications
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        { 
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
@@ -132,14 +143,7 @@ namespace IPUserControls
             OnPropertyChanged(propertyName);
             return true;
         }
-        #endregion
-    }
 
-    public enum ConnectionStatus
-    {
-        Connected,
-        Disconnected,
-        Connecting,
-        Error
+        #endregion Property Notifications
     }
 }

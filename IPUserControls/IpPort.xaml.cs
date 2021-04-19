@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace IPUserControls
 {
@@ -18,13 +15,44 @@ namespace IPUserControls
     {
         public IpPort()
         {
-            DefaultPortNumber = 3092;
             InitializeComponent();
         }
 
-        // Exposed Properties 
+        // Exposed Properties
         // --------------------------------------
+        public bool InputIsEnabled
+        {
+            get => (bool)GetValue(InputIsEnabledProperty);
+            set
+            {
+                SetValue(InputIsEnabledProperty, value);
+                OnPropertyChanged();
+            }
+        }
 
+        public static readonly DependencyProperty InputIsEnabledProperty =
+            DependencyProperty.Register("InputIsEnabled", typeof(bool), typeof(IpPort), new PropertyMetadata(true));
+
+        public ushort PortNumber
+        {
+            get => (ushort)GetValue(PortNumberProperty);
+            set
+            {
+                SetValue(PortNumberProperty, value);
+                OnPropertyChanged();
+            }
+        }
+
+        public static readonly DependencyProperty PortNumberProperty =
+            DependencyProperty.Register("PortNumber", typeof(ushort), typeof(IpPort), new PropertyMetadata(ushort.MinValue));
+
+        /// <summary>
+        /// Sets the Port number to display at start up.
+        /// </summary>
+        public ushort DefaultPortNumber { set => PortNumber = value; } // Doesn't work for some reason
+
+        public static readonly DependencyProperty DefaultPortNumberProperty =
+            DependencyProperty.Register("DefaultPortNumber", typeof(ushort), typeof(IpPort), new PropertyMetadata(ushort.MinValue));
 
 
         // Methods
@@ -43,36 +71,8 @@ namespace IPUserControls
 
         // Properties
         // --------------------------------------
-        private ushort _portNumber;
 
-        /// <summary>
-        /// Holds the input Port number.
-        /// </summary>
-        public ushort PortNumber
-        {
-            get => _portNumber;
-            set => SetProperty(ref _portNumber, value);
-        }
-
-        /// <summary>
-        /// Sets the Port number to display at start up.
-        /// </summary>
-        public ushort DefaultPortNumber
-        {
-            set => PortNumber = value;
-        }
-
-        private bool _inputEnabled = true;
-
-        /// <summary>
-        /// Enables the IP Address and Port text box
-        /// </summary>
-        public bool InputEnabled
-        {
-            get => _inputEnabled;
-            set => SetProperty(ref _inputEnabled, value);
-        }
-
+       
 
 
         // Event Handlers
@@ -99,8 +99,8 @@ namespace IPUserControls
 
         private void PortNrTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e) => PortNrTextBox.SelectAll();
 
-
         #region Property Notifications
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -115,6 +115,7 @@ namespace IPUserControls
             OnPropertyChanged(propertyName);
             return true;
         }
-        #endregion
+
+        #endregion Property Notifications
     }
 }

@@ -3,17 +3,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ip="clr-namespace:IPUserControls;assembly=IPUserControls"
         xmlns:ipUserControls="clr-namespace:IPUserControls;assembly=IPUserControls.Wpf"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Test Window" Height="133.333" Width="318.933" >
+        Title="Test Window" Height="133.733" Width="395.733" >
     <Grid>
         <StackPanel Orientation="Horizontal">
             <Label Content="NCU" />
-            <ipUserControls:IpField VerticalAlignment="Top"/>
-            <ipUserControls:IpPort  />
-            <ipUserControls:IpStatus VerticalAlignment="Top" Width="40" />
+            <ipUserControls:IpField Name="IpField" VerticalAlignment="Top"/>
+            <ipUserControls:IpPort  Name="IpPort" DefaultPortNumber="10" />
+            <ipUserControls:IpStatus Name="IpStatus" />
+            <Button Content="Enable/Disable Port" Height="20" VerticalAlignment="Top" Click="Button_Click" />
         </StackPanel>
     </Grid>
 </Window>

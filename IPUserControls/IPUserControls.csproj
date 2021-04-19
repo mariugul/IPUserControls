@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release\net48\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,6 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionStatus.cs" />
     <Compile Include="IpField.xaml.cs">
       <DependentUpon>IpField.xaml</DependentUpon>
     </Compile>
@@ -102,9 +103,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Images\ip_connected.png" />
+    <Resource Include="Images\ip_connected.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\ip_connected2.png" />
-    <Resource Include="Images\ip_connecting - Copy.png" />
     <Resource Include="Images\ip_connecting.png" />
     <Resource Include="Images\ip_connecting2.png" />
     <Resource Include="Images\ip_disconnected.png" />

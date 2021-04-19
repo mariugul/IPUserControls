@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace IPUserControls
@@ -19,9 +20,72 @@ namespace IPUserControls
 
         #region Exposed Properties
 
+        /// <summary>
+        /// Gets the IP Address as a string.
+        /// </summary>
+        public string IpAddress
+        {
+            get => (string)GetValue(IpAddressProperty); 
+            private set 
+            {
+                SetValue(IpAddressProperty, value);
+                OnPropertyChanged();
+            }
+        }
 
+        public static readonly DependencyProperty IpAddressProperty =
+            DependencyProperty.Register("IpAddress", typeof(string), typeof(IpField), new PropertyMetadata("0.0.0.0"));
+
+        
+        /// <summary>
+        /// Returns the IP address as a byte array.
+        /// </summary>
+        public byte[] IpAddressBytes
+        {
+            get => (byte[])GetValue(IpAddressBytesProperty); 
+            private set 
+            {
+                SetValue(IpAddressBytesProperty, value);
+                OnPropertyChanged();
+            }
+        }
+
+        public static readonly DependencyProperty IpAddressBytesProperty =
+            DependencyProperty.Register("IpAddressBytes", typeof(byte[]), typeof(IpField), new PropertyMetadata(new byte[ushort.MaxValue]));
+
+        public bool IpInputEnabled
+        {
+            get => (bool)GetValue(IpInputEnabledProperty);
+            set
+            {
+                SetValue(IpInputEnabledProperty, value);
+                OnPropertyChanged();
+            }
+        }
+
+        public static readonly DependencyProperty IpInputEnabledProperty =
+            DependencyProperty.Register("IpInputEnabled", typeof(bool), typeof(IpPort), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Sets the default IP Address that is displayed on start up.
+        /// </summary>
+        public string DefaultIpAddress
+        {
+            set
+            {
+                if (IsValidIpAddress(value))
+                {
+                    var ipBytes = value.Split('.');
+                    IpFirstByte = ipBytes[0];
+                    IpSecondByte = ipBytes[1];
+                    IpThirdByte = ipBytes[2];
+                    IpFourthByte = ipBytes[3];
+                }
+            }
+        }
 
         #endregion
+
 
         #region Properties
         private string _ipFirstByte = "0";
@@ -88,41 +152,6 @@ namespace IPUserControls
             }
         }
 
-        private string _ipAddress = "0.0.0.0";
-
-        /// <summary>
-        /// The IP Address that is currently typed in.
-        /// </summary>
-        public string IpAddress
-        {
-            get => _ipAddress;
-            private set => SetProperty(ref _ipAddress, value);
-        }
-
-        private byte[] _ipAddressBytes = new byte[4];
-        public byte[] IpAddressBytes
-        {
-            get => _ipAddressBytes;
-            set => SetProperty(ref _ipAddressBytes, value);
-        }
-
-        /// <summary>
-        /// Sets the default IP Address that is displayed on start up.
-        /// </summary>
-        public string DefaultIpAddress
-        {
-            set
-            {
-                if (IsValidIpAddress(value))
-                {
-                    var ipBytes = value.Split('.');
-                    IpFirstByte = ipBytes[0];
-                    IpSecondByte = ipBytes[1];
-                    IpThirdByte = ipBytes[2];
-                    IpFourthByte = ipBytes[3];
-                }
-            }
-        }
         #endregion
 
         #region Methods
@@ -211,10 +240,13 @@ namespace IPUserControls
         #endregion
 
         #region Property Notifications
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string propertyName)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
@@ -223,6 +255,7 @@ namespace IPUserControls
             OnPropertyChanged(propertyName);
             return true;
         }
-        #endregion
+
+        #endregion Property Notifications
     }
 }
