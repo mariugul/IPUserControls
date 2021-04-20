@@ -86,7 +86,6 @@ namespace IPUserControls
 
         #endregion
 
-
         #region Properties
         private string _ipFirstByte = "0";
 
@@ -162,16 +161,19 @@ namespace IPUserControls
                 IpAddressBytes[1] + "." +
                 IpAddressBytes[2] + "." +
                 IpAddressBytes[3];
-            Console.WriteLine($"IP Address: {IpAddress}");
         }
 
         private void UpdateIpAddressBytes()
         {
-            IpAddressBytes[0] = StringToByte(IpFirstByte);
-            IpAddressBytes[1] = StringToByte(IpSecondByte);
-            IpAddressBytes[2] = StringToByte(IpThirdByte);
-            IpAddressBytes[3] = StringToByte(IpFourthByte);
-            Console.WriteLine($"IP Address Bytes: {IpAddressBytes[0]} {IpAddressBytes[1]} {IpAddressBytes[2]} {IpAddressBytes[3]}");
+            var ipBytes = new[]
+            {
+                StringToByte(IpFirstByte),
+                StringToByte(IpSecondByte),
+                StringToByte(IpThirdByte),
+                StringToByte(IpFourthByte)
+            };
+
+            IpAddressBytes = ipBytes;
         }
 
         private void UpdateIpByte(ref string backingField, string value, string property)
