@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>IPUserControls.Wpf</id>
+    <version>0.0.1</version>
+    <title>IP Text Boxes</title>
+    <authors>Marius C. K.</authors>
+    <owners>Marius C. K.</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/mariugul/IPUserControls/blob/main/LICENSE</licenseUrl>
+    <icon>ip_connected2.png</icon>
+    <projectUrl>https://github.com/mariugul/IPUserControls</projectUrl>
+    <description>IP address and IP port text box, that only accept valid IP address and port values, as well as an IP connection status icon that changes its color and text based on the passed in connection status.</description>
+    <summary>These controls are great for connecting to TCP and displaying the connection status.</summary>
+    <releaseNotes>Built for .NET Framework 4.8.</releaseNotes>
+    <copyright>Marius C. K.</copyright>
+    <language>en-US</language>
+    <tags>wpf-controls, .NET-Framework</tags>
+    <readme>readme.md</readme>
+  </metadata>
+  <files>
+    <file src="lib\net48\IPUserControls.Wpf.dll" target="lib\net48\IPUserControls.Wpf.dll" />
+    <file src="lib\net48\IPUserControls.Wpf.pdb" target="lib\net48\IPUserControls.Wpf.pdb" />
+    <file src="ip_connected2.png" target="ip_connected2.png" />
+    <file src="readme.md" target="readme.md" />
+  </files>
+</package>
