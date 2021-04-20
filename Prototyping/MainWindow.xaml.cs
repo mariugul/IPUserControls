@@ -27,9 +27,38 @@ namespace Prototyping
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            IpPort.InputIsEnabled = !IpPort.InputIsEnabled;
-            IpField.IpInputEnabled = !IpField.IpInputEnabled;
+            if (_connectionStatus != 1)
+                Connect();
+            else
+                Disconnect();
         }
+
+        private void Disconnect()
+        {
+            // "try disconnect"
+
+            // Disconnected!!! Change status
+            _connectionStatus = 0; // 0 means connected
+
+            IpPort.InputIsEnabled = true;
+            IpField.IpInputEnabled = true;
+            ConnectionButton.Content = "Connect";
+
+        }
+
+        private void Connect()
+        {
+            // "try connect"
+
+            // Connected!!! Change status
+            _connectionStatus = 1; // 1 means connected
+
+            IpPort.InputIsEnabled = false;
+            IpField.IpInputEnabled = false;
+            ConnectionButton.Content = "Disconnect";
+        }
+
+        private byte _connectionStatus;
 
         #region Property Notifications
 

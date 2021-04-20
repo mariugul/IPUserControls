@@ -6,14 +6,26 @@
         xmlns:ipUserControls="clr-namespace:IPUserControls;assembly=IPUserControls.Wpf"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Test Window" Height="133.733" Width="395.733" >
+        Title="Test Window" Height="133.733" Width="395.733">
     <Grid>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="NCU" />
-            <ipUserControls:IpField Name="IpField" VerticalAlignment="Top"/>
-            <ipUserControls:IpPort  Name="IpPort" DefaultPortNumber="10" />
-            <ipUserControls:IpStatus Name="IpStatus" />
-            <Button Content="Enable/Disable Port" Height="20" VerticalAlignment="Top" Click="Button_Click" />
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="IP Address" />
+                <ipUserControls:IpField Name="IpField" VerticalAlignment="Top" />
+                <ipUserControls:IpPort  Name="IpPort" DefaultPortNumber="10" />
+                <ipUserControls:IpStatus Name="IpStatus" />
+                <Button Name="ConnectionButton" Content="Connect" Height="20" VerticalAlignment="Top" Click="Button_Click" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <StackPanel>
+                    <Label Content="IP Address" FontWeight="DemiBold" />
+                    <Label Content="{Binding ElementName=IpField, Path=IpAddress}" HorizontalAlignment="Center" />
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Port Number" FontWeight="DemiBold" />
+                    <Label Content="{Binding ElementName=IpPort, Path=PortNumber}" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
