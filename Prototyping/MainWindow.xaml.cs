@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using IPUserControls;
 
 namespace Prototyping
 {
@@ -27,7 +28,7 @@ namespace Prototyping
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (_connectionStatus != 1)
+            if (_connectionStatus != ConnectionStatus.Connected)
                 Connect();
             else
                 Disconnect();
@@ -38,7 +39,7 @@ namespace Prototyping
             // "try disconnect"
 
             // Disconnected!!! Change status
-            _connectionStatus = 0; // 0 means connected
+            _connectionStatus = ConnectionStatus.Disconnected; // 0 means connected
 
             IpPort.InputIsEnabled = true;
             IpField.IpInputEnabled = true;
@@ -51,14 +52,14 @@ namespace Prototyping
             // "try connect"
 
             // Connected!!! Change status
-            _connectionStatus = 1; // 1 means connected
+            _connectionStatus = ConnectionStatus.Connected; // 1 means connected
 
             IpPort.InputIsEnabled = false;
             IpField.IpInputEnabled = false;
             ConnectionButton.Content = "Disconnect";
         }
 
-        private byte _connectionStatus;
+        private ConnectionStatus _connectionStatus;
 
         #region Property Notifications
 
