@@ -35,7 +35,6 @@ namespace IPUserControls
                 SetValue(ConnectionStatusProperty, value);
                 OnPropertyChanged();
                 UpdateConnectionImage();
-                IsEnabled = ConnectionStatus == ConnectionStatus.Disconnected;
             }
         }
 
@@ -80,10 +79,8 @@ namespace IPUserControls
 
         private void StatusIcon_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            PopupStatusInfo.PlacementTarget = StatusImage;
-            PopupStatusInfo.Placement = PlacementMode.Top;
+            PopupStatusInfo.Visibility = Visibility.Visible;
             PopupStatusInfo.IsOpen = true;
-            //PopupInfo.PopupText.Text = ConnectionStatus.ToString();
         }
 
         private void StatusIcon_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)

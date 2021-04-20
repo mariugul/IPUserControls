@@ -14,7 +14,7 @@
                 <ip:IpField Name="IpField" VerticalAlignment="Top" />
                 <ip:IpPort  Name="IpPort" DefaultPortNumber="10" />
                 <ip:IpStatus Name="IpStatus" />
-                <Button Name="ConnectionButton" Content="Connect" Height="20" VerticalAlignment="Top" Click="Button_Click" />
+                <Button Name="ConnectionButton" Content="Connect"  VerticalAlignment="Top" Click="Button_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                 <StackPanel>

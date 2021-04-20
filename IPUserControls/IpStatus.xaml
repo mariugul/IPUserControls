@@ -10,12 +10,14 @@
         <Image x:Name="StatusImage"
                Source="{Binding ConnectionImageSource}"
                Width="22"
-               Margin="5, 0, 5, 0"
+               Margin="5, 0 , 5, 0"
                MouseEnter="StatusIcon_MouseEnter"
                MouseLeave="StatusIcon_MouseLeave" />
         <Popup x:Name="PopupStatusInfo"
                AllowsTransparency="True"
-               VerticalOffset="40">
+               VerticalOffset="20"
+               Placement="Center"
+               PlacementTarget="{Binding ElementName=StatusImage}">
             <Grid>
                 <local:PopupInfo x:Name="PopupInfo" Content="{Binding ConnectionStatus}"/>
             </Grid>

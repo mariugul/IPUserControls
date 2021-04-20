@@ -16,14 +16,6 @@ namespace Prototyping
             InitializeComponent();
         }
 
-        private bool _enabled;
-
-        public bool Enabled
-        {
-            get => _enabled;
-            set => SetProperty(ref _enabled, value);
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (IpStatus.ConnectionStatus != ConnectionStatus.Connected)
