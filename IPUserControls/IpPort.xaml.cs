@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -11,7 +10,7 @@ namespace IPUserControls
     /// <summary>
     /// Interaction logic for IpPort.xaml
     /// </summary>
-    public partial class IpPort : UserControl, INotifyPropertyChanged
+    public partial class IpPort : INotifyPropertyChanged
     {
         public IpPort()
         {
@@ -20,19 +19,6 @@ namespace IPUserControls
 
         // Exposed Properties
         // --------------------------------------
-        public bool InputIsEnabled
-        {
-            get => (bool)GetValue(InputIsEnabledProperty);
-            set
-            {
-                SetValue(InputIsEnabledProperty, value);
-                OnPropertyChanged();
-            }
-        }
-
-        public static readonly DependencyProperty InputIsEnabledProperty =
-            DependencyProperty.Register("InputIsEnabled", typeof(bool), typeof(IpPort), new PropertyMetadata(true));
-
         public ushort PortNumber
         {
             get => (ushort)GetValue(PortNumberProperty);
@@ -54,7 +40,6 @@ namespace IPUserControls
         public static readonly DependencyProperty DefaultPortNumberProperty =
             DependencyProperty.Register("DefaultPortNumber", typeof(ushort), typeof(IpPort), new PropertyMetadata(ushort.MinValue));
 
-
         // Methods
         // --------------------------------------
         private static bool IsUShort(string input)
@@ -71,9 +56,6 @@ namespace IPUserControls
 
         // Properties
         // --------------------------------------
-
-       
-
 
         // Event Handlers
         // --------------------------------------

@@ -1,34 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using IPUserControls;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using IPUserControls;
 
 namespace Prototyping
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : INotifyPropertyChanged
     {
         public MainWindow()
         {
             InitializeComponent();
         }
 
-
         private bool _enabled;
 
         public bool Enabled
         {
-            get => _enabled; 
+            get => _enabled;
             set => SetProperty(ref _enabled, value);
         }
 
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (_connectionStatus != ConnectionStatus.Connected)
+            if (IpStatus.ConnectionStatus != ConnectionStatus.Connected)
                 Connect();
             else
                 Disconnect();
@@ -39,12 +37,11 @@ namespace Prototyping
             // "try disconnect"
 
             // Disconnected!!! Change status
-            _connectionStatus = ConnectionStatus.Disconnected; // 0 means connected
+            IpStatus.ConnectionStatus = ConnectionStatus.Disconnected; 
 
-            IpPort.InputIsEnabled = true;
-            IpField.IpInputEnabled = true;
+            IpPort.IsEnabled = true;
+            IpField.IsEnabled = true;
             ConnectionButton.Content = "Connect";
-
         }
 
         private void Connect()
@@ -52,16 +49,14 @@ namespace Prototyping
             // "try connect"
 
             // Connected!!! Change status
-            _connectionStatus = ConnectionStatus.Connected; // 1 means connected
+            IpStatus.ConnectionStatus = ConnectionStatus.Connected; 
 
-            IpPort.InputIsEnabled = false;
-            IpField.IpInputEnabled = false;
+            IpPort.IsEnabled = false;
+            IpField.IsEnabled = false;
             ConnectionButton.Content = "Disconnect";
         }
 
-        private ConnectionStatus _connectionStatus;
-
-        #region Property Notifications
+    #region Property Notifications
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -3,28 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 
 namespace IPUserControls
 {
     /// <summary>
     /// Interaction logic for IpStatus.xaml
     /// </summary>
-    public partial class IpStatus : UserControl, INotifyPropertyChanged
+    public partial class IpStatus : INotifyPropertyChanged
     {
         public IpStatus()
         {
-
             InitializeComponent();
-
-            //Binding MyPropertyHandBinding = new Binding
-            //{
-            //    Path = new PropertyPath(nameof(MyProperty))
-            //};
         }
-    
 
         // Status Image Sources
         private const string ImageConnected = "/IPUserControls;component/Images/ip_connected.png";
@@ -32,40 +23,24 @@ namespace IPUserControls
         private const string ImageConnecting = "/IPUserControls;component/Images/ip_connecting.png";
         private const string ImageError = "/IPUserControls;component/Images/ip_error.png";
 
-        #region Exposed Properties
-
-    
-
-        #endregion Exposed Properties
-
-
-        #region Properties
-
-        private bool _inputEnabled = true;
-
-        public bool InputEnabled
-        {
-            get => _inputEnabled;
-            set => SetProperty(ref _inputEnabled, value);
-        }
-
-        private ConnectionStatus _connectionStatus = ConnectionStatus.Disconnected;
-
-        /// <summary>
-        /// This can have the following statuses:
-        /// Connected, Disconnected, Connecting, Error.
-        /// </summary>
+        ///// <summary>
+        ///// This can have the following statuses:
+        ///// Connected, Disconnected, Connecting, Error.
+        ///// </summary>
         public ConnectionStatus ConnectionStatus
         {
-            get => _connectionStatus;
+            get => (ConnectionStatus)GetValue(ConnectionStatusProperty);
             set
             {
-                SetProperty(ref _connectionStatus, value);
+                SetValue(ConnectionStatusProperty, value);
+                OnPropertyChanged();
                 UpdateConnectionImage();
-                InputEnabled = ConnectionStatus == ConnectionStatus.Disconnected;
-                //ShowConnectionStatusPopup();
+                IsEnabled = ConnectionStatus == ConnectionStatus.Disconnected;
             }
         }
+
+        public static readonly DependencyProperty ConnectionStatusProperty =
+            DependencyProperty.Register("ConnectionStatus", typeof(ConnectionStatus), typeof(IpField), new PropertyMetadata(ConnectionStatus.Disconnected));
 
         private string _connectionImageSource = ImageDisconnected;
 
@@ -77,10 +52,6 @@ namespace IPUserControls
             get => _connectionImageSource;
             set => SetProperty(ref _connectionImageSource, value);
         }
-
-        #endregion Properties
-
-        #region Methods
 
         private void UpdateConnectionImage()
         {
@@ -107,16 +78,12 @@ namespace IPUserControls
             }
         }
 
-        #endregion Methods
-
-        #region Events
-
         private void StatusIcon_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             PopupStatusInfo.PlacementTarget = StatusImage;
             PopupStatusInfo.Placement = PlacementMode.Top;
             PopupStatusInfo.IsOpen = true;
-            ConnectionInfo.PopupText.Text = ConnectionStatus.ToString();
+            //PopupInfo.PopupText.Text = ConnectionStatus.ToString();
         }
 
         private void StatusIcon_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -124,8 +91,6 @@ namespace IPUserControls
             PopupStatusInfo.Visibility = Visibility.Collapsed;
             PopupStatusInfo.IsOpen = false;
         }
-
-        #endregion Events
 
         #region Property Notifications
 

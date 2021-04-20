@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace IPUserControls
+﻿namespace IPUserControls
 {
     /// <summary>
     /// Interaction logic for PopupInfo
     /// </summary>
-    public partial class PopupInfo : UserControl
+    public partial class PopupInfo
     {
         public PopupInfo()
         {

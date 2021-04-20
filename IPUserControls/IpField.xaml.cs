@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace IPUserControls
 {
     /// <summary>
     /// Interaction logic for IpField
     /// </summary>
-    public partial class IpField : UserControl, INotifyPropertyChanged
+    public partial class IpField : INotifyPropertyChanged
     {
         public IpField()
         {
@@ -25,8 +23,8 @@ namespace IPUserControls
         /// </summary>
         public string IpAddress
         {
-            get => (string)GetValue(IpAddressProperty); 
-            private set 
+            get => (string)GetValue(IpAddressProperty);
+            private set
             {
                 SetValue(IpAddressProperty, value);
                 OnPropertyChanged();
@@ -36,14 +34,13 @@ namespace IPUserControls
         public static readonly DependencyProperty IpAddressProperty =
             DependencyProperty.Register("IpAddress", typeof(string), typeof(IpField), new PropertyMetadata("0.0.0.0"));
 
-        
         /// <summary>
         /// Returns the IP address as a byte array.
         /// </summary>
         public byte[] IpAddressBytes
         {
-            get => (byte[])GetValue(IpAddressBytesProperty); 
-            private set 
+            get => (byte[])GetValue(IpAddressBytesProperty);
+            private set
             {
                 SetValue(IpAddressBytesProperty, value);
                 OnPropertyChanged();
@@ -53,19 +50,6 @@ namespace IPUserControls
         public static readonly DependencyProperty IpAddressBytesProperty =
             DependencyProperty.Register("IpAddressBytes", typeof(byte[]), typeof(IpField), new PropertyMetadata(new byte[ushort.MaxValue]));
 
-        public bool IpInputEnabled
-        {
-            get => (bool)GetValue(IpInputEnabledProperty);
-            set
-            {
-                SetValue(IpInputEnabledProperty, value);
-                OnPropertyChanged();
-            }
-        }
-
-        public static readonly DependencyProperty IpInputEnabledProperty =
-            DependencyProperty.Register("IpInputEnabled", typeof(bool), typeof(IpPort), new PropertyMetadata(true));
-
         /// <summary>
         /// Sets the default IP Address that is displayed on start up.
         /// </summary>
@@ -73,20 +57,19 @@ namespace IPUserControls
         {
             set
             {
-                if (IsValidIpAddress(value))
-                {
-                    var ipBytes = value.Split('.');
-                    IpFirstByte = ipBytes[0];
-                    IpSecondByte = ipBytes[1];
-                    IpThirdByte = ipBytes[2];
-                    IpFourthByte = ipBytes[3];
-                }
+                if (!IsValidIpAddress(value)) return;
+                var ipBytes = value.Split('.');
+                IpFirstByte = ipBytes[0];
+                IpSecondByte = ipBytes[1];
+                IpThirdByte = ipBytes[2];
+                IpFourthByte = ipBytes[3];
             }
         }
 
-        #endregion
+        #endregion Exposed Properties
 
         #region Properties
+
         private string _ipFirstByte = "0";
 
         /// <summary>
@@ -151,9 +134,10 @@ namespace IPUserControls
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Methods
+
         private void UpdateIpAddress()
         {
             IpAddress =
@@ -228,18 +212,22 @@ namespace IPUserControls
             Regex ipAddressCheck = new Regex(@"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
             return ipAddressCheck.IsMatch(value);
         }
-        #endregion
+
+        #endregion Methods
 
         #region Events
-
 
         // Select All Text On Keyboard Focus
         // ---------------------------------
         private void FirstByteTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e) => FirstByteTextBox.SelectAll();
+
         private void SecondByteTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e) => SecondByteTextBox.SelectAll();
+
         private void ThirdByteTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e) => ThirdByteTextBox.SelectAll();
+
         private void FourthByteTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e) => FourthByteTextBox.SelectAll();
-        #endregion
+
+        #endregion Events
 
         #region Property Notifications
 

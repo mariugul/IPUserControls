@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ipUserControls="clr-namespace:IPUserControls;assembly=IPUserControls.Wpf"
+        xmlns:ip="clr-namespace:IPUserControls;assembly=IPUserControls"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Test Window" Height="133.733" Width="395.733">
@@ -11,9 +11,9 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="IP Address" />
-                <ipUserControls:IpField Name="IpField" VerticalAlignment="Top" />
-                <ipUserControls:IpPort  Name="IpPort" DefaultPortNumber="10" />
-                <ipUserControls:IpStatus Name="IpStatus" />
+                <ip:IpField Name="IpField" VerticalAlignment="Top" />
+                <ip:IpPort  Name="IpPort" DefaultPortNumber="10" />
+                <ip:IpStatus Name="IpStatus" />
                 <Button Name="ConnectionButton" Content="Connect" Height="20" VerticalAlignment="Top" Click="Button_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">

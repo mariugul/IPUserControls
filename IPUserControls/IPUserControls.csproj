@@ -7,7 +7,7 @@
     <ProjectGuid>{96C79F86-B591-49C2-A3AA-98FA9C29A126}</ProjectGuid>
     <OutputType>library</OutputType>
     <RootNamespace>IPUserControls</RootNamespace>
-    <AssemblyName>IPUserControls.Wpf</AssemblyName>
+    <AssemblyName>IPUserControls</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -103,9 +103,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Images\ip_connected.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Images\ip_connected.png" />
     <Resource Include="Images\ip_connected2.png" />
     <Resource Include="Images\ip_connecting.png" />
     <Resource Include="Images\ip_connecting2.png" />

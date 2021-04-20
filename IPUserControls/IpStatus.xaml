@@ -17,7 +17,7 @@
                AllowsTransparency="True"
                VerticalOffset="40">
             <Grid>
-                <local:PopupInfo x:Name="ConnectionInfo" />
+                <local:PopupInfo x:Name="PopupInfo" Content="{Binding ConnectionStatus}"/>
             </Grid>
         </Popup>
     </Grid>
