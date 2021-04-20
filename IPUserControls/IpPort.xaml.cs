@@ -36,7 +36,7 @@ namespace IPUserControls
         public ushort PortNumber
         {
             get => (ushort)GetValue(PortNumberProperty);
-            set
+            private set
             {
                 SetValue(PortNumberProperty, value);
                 OnPropertyChanged();
