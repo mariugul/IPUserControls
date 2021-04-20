@@ -3,7 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              Background="White"
-             BorderBrush="DarkGray" BorderThickness="1" Height="22" ToolTip="IP Address">
+             BorderBrush="DarkGray" 
+             BorderThickness="1" 
+             Height="22" 
+             ToolTip="IP Address"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Center">
 
     <Grid>
         <Grid.ColumnDefinitions>

@@ -27,8 +27,11 @@
             Width="42"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
+            VerticalAlignment="Center"
             Text="{Binding PortNumber}"
             TextChanged="PortNumber_TextChanged"
-            GotKeyboardFocus="PortNrTextBox_GotKeyboardFocus" />
+            GotKeyboardFocus="PortNrTextBox_GotKeyboardFocus" 
+            BorderThickness="1"
+            BorderBrush="DarkGray"/>
     </Grid>
 </UserControl> 

@@ -11,10 +11,10 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="IP Address" />
-                <ip:IpField Name="IpField" VerticalAlignment="Top" />
-                <ip:IpPort  Name="IpPort" DefaultPortNumber="10" />
+                <ip:IpField Name="IpField" />
+                <ip:IpPort  Name="IpPort" DefaultPortNumber="10" VerticalAlignment="Center"/>
                 <ip:IpStatus Name="IpStatus" />
-                <Button Name="ConnectionButton" Content="Connect"  VerticalAlignment="Top" Click="Button_Click" />
+                <Button Name="ConnectionButton" Content="Connect" Click="Button_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                 <StackPanel>
