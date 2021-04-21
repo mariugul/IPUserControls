@@ -24,7 +24,7 @@ namespace IPUserControls
         public string IpAddress
         {
             get => (string)GetValue(IpAddressProperty);
-            private set
+            set
             {
                 SetValue(IpAddressProperty, value);
                 OnPropertyChanged();
@@ -40,7 +40,7 @@ namespace IPUserControls
         public byte[] IpAddressBytes
         {
             get => (byte[])GetValue(IpAddressBytesProperty);
-            private set
+            set
             {
                 SetValue(IpAddressBytesProperty, value);
                 OnPropertyChanged();
@@ -53,18 +53,18 @@ namespace IPUserControls
         /// <summary>
         /// Sets the default IP Address that is displayed on start up.
         /// </summary>
-        public string DefaultIpAddress
-        {
-            set
-            {
-                if (!IsValidIpAddress(value)) return;
-                var ipBytes = value.Split('.');
-                IpFirstByte = ipBytes[0];
-                IpSecondByte = ipBytes[1];
-                IpThirdByte = ipBytes[2];
-                IpFourthByte = ipBytes[3];
-            }
-        }
+        //public string DefaultIpAddress
+        //{
+        //    set
+        //    {
+        //        if (!IsValidIpAddress(value)) return;
+        //        var ipBytes = value.Split('.');
+        //        IpFirstByte = ipBytes[0];
+        //        IpSecondByte = ipBytes[1];
+        //        IpThirdByte = ipBytes[2];
+        //        IpFourthByte = ipBytes[3];
+        //    }
+        //}
 
         #endregion Exposed Properties
 
@@ -173,21 +173,20 @@ namespace IPUserControls
 
             if (value == "")
             {
-                if (backingField == "0")
-                    return;
-                else
-                    backingField = "0";
+                if (backingField == "0") return;
+                backingField = "0";
             }
 
             OnPropertyChanged(property);
         }
 
-        private void ParseIpInput(ref string input)
+        private static void ParseIpInput(ref string input)
         {
             if (input.Contains(" ")) input = input.Replace(" ", "");
             if (input.Contains("-")) input = input.Replace("-", "");
             if (input.Contains("+")) input = input.Replace("+", "");
-            if (input.StartsWith("0") && input.Length > 1) input = input.Remove(0, 1);
+            while (input.StartsWith("0") && input.Length > 1) input = input.Remove(0, 1);
+            //if (input.StartsWith("0") && input.Length > 1) input = input.Remove(0, 1); // Replaced this with the while above
         }
 
         private bool IsNumber(string input)
@@ -200,16 +199,19 @@ namespace IPUserControls
             return byte.TryParse(input, out _);
         }
 
-        private byte StringToByte(string input)
+        /// <summary>
+        /// Returns a byte from a string representation. If the string is
+        /// an invalid number or bigger than a byte, the result returned is 0.
+        /// </summary>
+        private static byte StringToByte(string input)
         {
-            byte result;
-            if (byte.TryParse(input, out result)) return result;
-            return 0;
+            return byte.TryParse(input, out var result) ? result : (byte)0;
         }
 
         private bool IsValidIpAddress(string value)
         {
-            Regex ipAddressCheck = new Regex(@"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+            // Does not validate leading 0's
+            var ipAddressCheck = new Regex(@"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
             return ipAddressCheck.IsMatch(value);
         }
 

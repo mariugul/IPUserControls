@@ -8,7 +8,8 @@
              Height="22" 
              ToolTip="IP Address"
              HorizontalAlignment="Center"
-             VerticalAlignment="Center">
+             VerticalAlignment="Center"
+             >
 
     <Grid>
         <Grid.ColumnDefinitions>

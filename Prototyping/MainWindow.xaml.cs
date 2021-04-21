@@ -29,7 +29,7 @@ namespace Prototyping
             // "try disconnect"
 
             // Disconnected!!! Change status
-            IpStatus.ConnectionStatus = ConnectionStatus.Disconnected; 
+            IpStatus.ConnectionStatus = ConnectionStatus.Disconnected;
 
             IpPort.IsEnabled = true;
             IpField.IsEnabled = true;
@@ -41,14 +41,14 @@ namespace Prototyping
             // "try connect"
 
             // Connected!!! Change status
-            IpStatus.ConnectionStatus = ConnectionStatus.Connected; 
+            IpStatus.ConnectionStatus = ConnectionStatus.Connected;
 
             IpPort.IsEnabled = false;
             IpField.IsEnabled = false;
             ConnectionButton.Content = "Disconnect";
         }
 
-    #region Property Notifications
+        #region Property Notifications
 
         public event PropertyChangedEventHandler PropertyChanged;
 
