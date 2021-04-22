@@ -29,7 +29,7 @@ namespace IPUserControls
             {
                 SetValue(IpAddressProperty, value);
                 OnPropertyChanged();
-                Debug.WriteLine($"IpAddress in UC set to: {IpAddress}");
+                //Debug.WriteLine($"IpAddress in UC set to: {IpAddress}");
             }
         }
 
@@ -66,6 +66,20 @@ namespace IPUserControls
             get => _ipFirstByte;
             set
             {
+                if (value == _ipFirstByte) return;
+
+                ParseIpByteInput(ref value);
+
+                if (IsByte(value))
+                    _ipFirstByte = value;
+                else if (IsNumber(value))
+                    return;
+
+                if (value == "")
+                {
+                    if (_ipFirstByte == "0") return;
+                    _ipFirstByte = "0";
+                }
                 UpdateIpByte(ref _ipFirstByte, value, nameof(IpFirstByte));
                 UpdateIpAddressBytes();
                 UpdateIpAddress();
@@ -127,10 +141,11 @@ namespace IPUserControls
         private void UpdateIpAddress()
         {
             IpAddress =
-                IpAddressBytes[0] + "." +
                 IpAddressBytes[1] + "." +
-                IpAddressBytes[2] + "." +
-                IpAddressBytes[3];
+                StringToByte(IpFirstByte)  + "." +
+                StringToByte(IpSecondByte) + "." +
+                StringToByte(IpThirdByte)  + "." +
+                StringToByte(IpFourthByte) + ".";
         }
 
         private void UpdateIpAddressBytes()
@@ -148,7 +163,7 @@ namespace IPUserControls
 
         private void UpdateIpByte(ref string backingField, string value, string property)
         {
-            ParseIpInput(ref value);
+            ParseIpByteInput(ref value);
 
             if (value == backingField) return;
 
@@ -166,15 +181,28 @@ namespace IPUserControls
             OnPropertyChanged(property);
         }
 
-        private static void ParseIpInput(ref string input)
+        /// <summary>
+        /// Removes whitespace, leading 0's and '+', '-' signs.
+        /// These are characters that would be legal to pass in
+        /// otherwise, and be evaluated as correct numbers.
+        /// <example>
+        /// // All of the strings below will equal to a valid number.
+        /// string nrStr1 = "002";
+        /// string nrStr2 = "-001";
+        /// string nrStr3 = "+20";
+        /// string nrStr4 = " 123";
+        /// isNumber(nrStr1); // Same for nrStrX...
+        /// </example>
+        /// </summary>
+        /// <param name="input"></param>
+        private static void ParseIpByteInput(ref string input)
         {
-            if (input.Contains(" ")) input = input.Replace(" ", "");
-            if (input.Contains("-")) input = input.Replace("-", "");
-            if (input.Contains("+")) input = input.Replace("+", "");
+            while (input.Contains(" ")) input = input.Replace(" ", "");
+            while (input.Contains("-")) input = input.Replace("-", "");
+            while (input.Contains("+")) input = input.Replace("+", "");
             while (input.StartsWith("0") && input.Length > 1) input = input.Remove(0, 1);
-            //if (input.StartsWith("0") && input.Length > 1) input = input.Remove(0, 1); // Replaced this with the while above
         }
-
+        
         private bool IsNumber(string input)
         {
             return int.TryParse(input, out _);
@@ -194,10 +222,15 @@ namespace IPUserControls
             return byte.TryParse(input, out var result) ? result : (byte)0;
         }
 
+        /// <summary>
+        /// The purpose of this is to validate the potential incoming IP address
+        /// from an app consuming this User Control.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>True if the string is a valid IP address.</returns>
         private bool IsValidIpAddress(string value)
         {
-            // Does not validate leading 0's
-            var ipAddressCheck = new Regex(@"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+            var ipAddressCheck = new Regex(@"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"); // Does not validate leading 0's
             return ipAddressCheck.IsMatch(value);
         }
 
