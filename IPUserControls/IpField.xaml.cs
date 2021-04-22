@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -28,11 +29,12 @@ namespace IPUserControls
             {
                 SetValue(IpAddressProperty, value);
                 OnPropertyChanged();
+                Debug.WriteLine($"IpAddress in UC set to: {IpAddress}");
             }
         }
 
         public static readonly DependencyProperty IpAddressProperty =
-            DependencyProperty.Register("IpAddress", typeof(string), typeof(IpField), new PropertyMetadata("0.0.0.0"));
+            DependencyProperty.Register("IpAddress", typeof(string), typeof(IpField), new FrameworkPropertyMetadata("0.0.0.0"){BindsTwoWayByDefault = true});
 
         /// <summary>
         /// Returns the IP address as a byte array.
@@ -48,23 +50,7 @@ namespace IPUserControls
         }
 
         public static readonly DependencyProperty IpAddressBytesProperty =
-            DependencyProperty.Register("IpAddressBytes", typeof(byte[]), typeof(IpField), new PropertyMetadata(new byte[ushort.MaxValue]));
-
-        /// <summary>
-        /// Sets the default IP Address that is displayed on start up.
-        /// </summary>
-        //public string DefaultIpAddress
-        //{
-        //    set
-        //    {
-        //        if (!IsValidIpAddress(value)) return;
-        //        var ipBytes = value.Split('.');
-        //        IpFirstByte = ipBytes[0];
-        //        IpSecondByte = ipBytes[1];
-        //        IpThirdByte = ipBytes[2];
-        //        IpFourthByte = ipBytes[3];
-        //    }
-        //}
+            DependencyProperty.Register("IpAddressBytes", typeof(byte[]), typeof(IpField), new FrameworkPropertyMetadata(new byte[ushort.MaxValue]){BindsTwoWayByDefault = true});
 
         #endregion Exposed Properties
 

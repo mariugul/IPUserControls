@@ -39,7 +39,7 @@ namespace IPUserControls
         }
 
         public static readonly DependencyProperty ConnectionStatusProperty =
-            DependencyProperty.Register("ConnectionStatus", typeof(ConnectionStatus), typeof(IpField), new PropertyMetadata(ConnectionStatus.Disconnected));
+            DependencyProperty.Register("ConnectionStatus", typeof(ConnectionStatus), typeof(IpField), new FrameworkPropertyMetadata(ConnectionStatus.Disconnected){BindsTwoWayByDefault = true});
 
         private string _connectionImageSource = ImageDisconnected;
 

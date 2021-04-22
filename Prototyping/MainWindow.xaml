@@ -9,9 +9,6 @@
         mc:Ignorable="d"
         Title="Test Window" Height="133.733" Width="395.733">
 
-    <!--<Window.DataContext>
-        <vm:MainWindowViewModel />
-    </Window.DataContext>-->
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal">

@@ -3,10 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              Background="White"
              mc:Ignorable="d"
-             VerticalAlignment="Center">
+             VerticalAlignment="Center"
+             x:Name="Uc">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -29,7 +29,7 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             VerticalAlignment="Center"
-            Text="{Binding PortNumber}"
+            Text="{Binding PortNumber, ElementName=Uc}"
             TextChanged="PortNumber_TextChanged"
             GotKeyboardFocus="PortNrTextBox_GotKeyboardFocus" 
             BorderThickness="1"

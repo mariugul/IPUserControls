@@ -30,15 +30,7 @@ namespace IPUserControls
         }
 
         public static readonly DependencyProperty PortNumberProperty =
-            DependencyProperty.Register("PortNumber", typeof(ushort), typeof(IpPort), new PropertyMetadata(ushort.MinValue));
-
-        /// <summary>
-        /// Sets the Port number to display at start up.
-        /// </summary>
-        public ushort DefaultPortNumber { set => PortNumber = value; } // Doesn't work for some reason
-
-        public static readonly DependencyProperty DefaultPortNumberProperty =
-            DependencyProperty.Register("DefaultPortNumber", typeof(ushort), typeof(IpPort), new PropertyMetadata(ushort.MinValue));
+            DependencyProperty.Register("PortNumber", typeof(ushort), typeof(IpPort), new FrameworkPropertyMetadata(ushort.MinValue){BindsTwoWayByDefault = true});
 
         // Methods
         // --------------------------------------
