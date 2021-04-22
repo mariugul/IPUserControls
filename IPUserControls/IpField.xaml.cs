@@ -17,6 +17,14 @@ namespace IPUserControls
             InitializeComponent();
         }
 
+        /// <summary>
+        /// This variable stores the information whether the IP address
+        /// is set from an external user of the control or from internally.
+        /// This is necessary so the IP can be set from the external source
+        /// and be reflected back in the text boxes.
+        /// </summary>
+        private bool _ipExternalInput = false;
+
         #region Exposed Properties
 
         /// <summary>
@@ -27,7 +35,15 @@ namespace IPUserControls
             get => (string)GetValue(IpAddressProperty);
             set
             {
-                SetValue(IpAddressProperty, value);
+                if (_ipExternalInput)
+                {
+                    
+                }
+                else
+                {
+
+                    SetValue(IpAddressProperty, value);
+                }
                 OnPropertyChanged();
                 //Debug.WriteLine($"IpAddress in UC set to: {IpAddress}");
             }
@@ -70,7 +86,7 @@ namespace IPUserControls
 
                 ParseIpByteInput(ref value);
 
-                if (IsByte(value))
+                if (!IsByte(value))
                     _ipFirstByte = value;
                 else if (IsNumber(value))
                     return;
@@ -80,8 +96,8 @@ namespace IPUserControls
                     if (_ipFirstByte == "0") return;
                     _ipFirstByte = "0";
                 }
-                UpdateIpByte(ref _ipFirstByte, value, nameof(IpFirstByte));
-                UpdateIpAddressBytes();
+
+                OnPropertyChanged();
                 UpdateIpAddress();
             }
         }
@@ -141,11 +157,10 @@ namespace IPUserControls
         private void UpdateIpAddress()
         {
             IpAddress =
-                IpAddressBytes[1] + "." +
-                StringToByte(IpFirstByte)  + "." +
-                StringToByte(IpSecondByte) + "." +
-                StringToByte(IpThirdByte)  + "." +
-                StringToByte(IpFourthByte) + ".";
+                StringToByte(_ipFirstByte)  + "." +
+                StringToByte(_ipSecondByte) + "." +
+                StringToByte(_ipThirdByte)  + "." +
+                StringToByte(_ipFourthByte) + ".";
         }
 
         private void UpdateIpAddressBytes()
