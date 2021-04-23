@@ -1,19 +1,19 @@
 ﻿<Window x:Class="Prototyping_Prism.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ip="clr-namespace:IPUserControls;assembly=IPUserControls"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="218.122" Width="443.999">
     <Grid>
         <StackPanel VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <!--<Label Content="IP Address"></Label>-->
-                <!--<ip:IpField IpAddress="{Binding IpAddress}"/>-->
-                <!--<ip:IpPort PortNumber="5022"/>-->
-                <ip:IpStatus ConnectionStatus="Connected" />
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Label Content="IP Address" VerticalAlignment="Center"></Label>
+                <ip:IpField></ip:IpField>
+                <ip:IpPort></ip:IpPort>
+                <ip:IpStatus></ip:IpStatus>
             </StackPanel>
-            <!--<Button Content="{Binding  ButtonContent}" Command="{Binding ButtonClickCommand}" Width="100" Margin="10"/>-->
+            <Button Content="Connect" Width="100"></Button>
         </StackPanel>
     </Grid>
 </Window>
