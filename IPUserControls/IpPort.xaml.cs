@@ -22,18 +22,34 @@ namespace IPUserControls
         public ushort PortNumber
         {
             get => (ushort)GetValue(PortNumberProperty);
-            private set
+            set
             {
                 SetValue(PortNumberProperty, value);
                 OnPropertyChanged();
             }
         }
 
-        public static readonly DependencyProperty PortNumberProperty =
-            DependencyProperty.Register("PortNumber", typeof(ushort), typeof(IpPort), new FrameworkPropertyMetadata(ushort.MinValue){BindsTwoWayByDefault = true});
+        public static readonly DependencyProperty PortNumberProperty = DependencyProperty.Register
+        (
+            "PortNumber", 
+            typeof(ushort),
+            typeof(IpPort),
+            new FrameworkPropertyMetadata
+            (
+                ushort.MinValue,
+                new PropertyChangedCallback(PortNumberChangedCallback)
+            )
+            {BindsTwoWayByDefault = true});
+
 
         // Event Handlers
         // --------------------------------------
+        private static void PortNumberChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var Uc = (IpPort) d;
+            Uc.PortNumber = (ushort)e.NewValue;
+        }
+        
         private void PortNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (PortNrTextBox.Text == PortNumber.ToString()) return;

@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WPF IP Address Field, Port and Status")]
-[assembly: AssemblyDescription("WPF User Controls with IP address field, IP port field and IP connection status icon.")]
+[assembly: AssemblyTitle("IPUserControls")]
+[assembly: AssemblyDescription("IP address and IP port text box, that only accept valid IP address and port values, as well as an IP connection status icon that changes its color and text based on the passed in connection status.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Marius C. K.")]
 [assembly: AssemblyProduct("IPUserControls")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCopyright("Marius C. K. Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,6 +51,6 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.0.1")]
-[assembly: AssemblyFileVersion("0.0.0.1")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 [assembly: NeutralResourcesLanguage("en")]

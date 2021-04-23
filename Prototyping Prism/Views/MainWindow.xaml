@@ -13,6 +13,7 @@
                 <Button Content="Change IP" Command="{Binding ButtonIpChangeCommand}"/>
                 <ip:IpStatus ConnectionStatus="{Binding ConnectionStatus}"/>
                 <Button Content="Change Status" Command="{Binding ButtonClickCommand}"/>
+                <ip:IpPort PortNumber="500"/>
             </StackPanel>
         </StackPanel>
     </Grid>

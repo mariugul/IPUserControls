@@ -12,6 +12,7 @@ namespace Prototyping_Prism.ViewModels
         {
             ButtonClickCommand = new DelegateCommand(ButtonClick);
             ButtonIpChangeCommand = new DelegateCommand(IpChangeButtonClick);
+            IpAddress = "192.168.0.175";
         }
 
 
@@ -39,7 +40,7 @@ namespace Prototyping_Prism.ViewModels
             }
         }
 
-        private ConnectionStatus _connectionStatus;
+        private ConnectionStatus _connectionStatus = ConnectionStatus.Disconnected;
         public ConnectionStatus ConnectionStatus
         {
             get => _connectionStatus;
@@ -63,5 +64,13 @@ namespace Prototyping_Prism.ViewModels
                 ConnectionStatus = ConnectionStatus.Disconnected;
 
         }
+    }
+
+    public enum SomeOtherConnectionStatus
+    {
+        Connected,
+        Disconnected, 
+        Connecting, 
+        Error
     }
 }

@@ -3,8 +3,7 @@
 namespace IPUserControls
 {
     /// <summary>
-    /// string extensions for validating if a string is a number and to
-    /// remove chars like whitespace, leading zeros etc.
+    /// string extensions
     /// </summary>
     public static class Extensions
     {
