@@ -9,8 +9,7 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <ip:IpField IpAddress="{Binding IpAddress}"/>
-                <Separator Width="20"/>
-                <TextBlock Text="{Binding IpAddress}"  VerticalAlignment="Center"/>
+                <Label Content="{Binding IpAddress}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

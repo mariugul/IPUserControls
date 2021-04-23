@@ -1,5 +1,6 @@
-﻿using System.Diagnostics;
+﻿using Prism.Commands;
 using Prism.Mvvm;
+using System.Diagnostics;
 
 namespace Prototyping_Prism.ViewModels
 {
@@ -7,8 +8,9 @@ namespace Prototyping_Prism.ViewModels
     {
         public MainWindowViewModel()
         {
+            ButtonClickCommand = new DelegateCommand(ButtonClick);
         }
-
+        
         private string _title = "Prism Application";
 
         public string Title
@@ -17,20 +19,27 @@ namespace Prototyping_Prism.ViewModels
             set => SetProperty(ref _title, value);
         }
 
-        private string _ipAddress = "0.0.0.100";
+        private string _ipAddress;
 
         public string IpAddress
         {
             get
             {
-                Debug.WriteLine($"_ipAddress in VM: {_ipAddress}");
+                Debug.WriteLine($"Get _ipAddress in VM: {_ipAddress}");
                 return _ipAddress;
-            } 
+            }
             set
             {
                 SetProperty(ref _ipAddress, value);
                 Debug.WriteLine($"Set IpAddress in VM to: {_ipAddress}");
             }
+        }
+
+        public DelegateCommand ButtonClickCommand { get; private set; }
+
+        private void ButtonClick()
+        {
+            IpAddress = "123.123.123.123";
         }
     }
 }

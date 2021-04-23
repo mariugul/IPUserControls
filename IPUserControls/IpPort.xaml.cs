@@ -32,23 +32,6 @@ namespace IPUserControls
         public static readonly DependencyProperty PortNumberProperty =
             DependencyProperty.Register("PortNumber", typeof(ushort), typeof(IpPort), new FrameworkPropertyMetadata(ushort.MinValue){BindsTwoWayByDefault = true});
 
-        // Methods
-        // --------------------------------------
-        private static bool IsUShort(string input)
-        {
-            if (input.Length > 5) return false;
-            if (!IsNumber(input)) return false;
-            return uint.Parse(input) <= 65535;
-        }
-
-        private static bool IsNumber(string input)
-        {
-            return new Regex("^[0-9]+$").IsMatch(input);
-        }
-
-        // Properties
-        // --------------------------------------
-
         // Event Handlers
         // --------------------------------------
         private void PortNumber_TextChanged(object sender, TextChangedEventArgs e)
@@ -62,7 +45,7 @@ namespace IPUserControls
                 return;
             }
 
-            if (!IsUShort(PortNrTextBox.Text))
+            if (!PortNrTextBox.Text.IsUShort())
                 PortNrTextBox.Text = PortNumber.ToString();
             else
             {

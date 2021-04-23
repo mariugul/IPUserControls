@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
+using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace IPUserControls
 {
@@ -17,14 +20,6 @@ namespace IPUserControls
             InitializeComponent();
         }
 
-        /// <summary>
-        /// This variable stores the information whether the IP address
-        /// is set from an external user of the control or from internally.
-        /// This is necessary so the IP can be set from the external source
-        /// and be reflected back in the text boxes.
-        /// </summary>
-        private bool _ipExternalInput = false;
-
         #region Exposed Properties
 
         /// <summary>
@@ -35,22 +30,15 @@ namespace IPUserControls
             get => (string)GetValue(IpAddressProperty);
             set
             {
-                if (_ipExternalInput)
-                {
+                if (!value.IsValidIpAddress()) return; 
                     
-                }
-                else
-                {
-
-                    SetValue(IpAddressProperty, value);
-                }
+                SetValue(IpAddressProperty, value);
                 OnPropertyChanged();
-                //Debug.WriteLine($"IpAddress in UC set to: {IpAddress}");
             }
         }
 
         public static readonly DependencyProperty IpAddressProperty =
-            DependencyProperty.Register("IpAddress", typeof(string), typeof(IpField), new FrameworkPropertyMetadata("0.0.0.0"){BindsTwoWayByDefault = true});
+            DependencyProperty.Register("IpAddress", typeof(string), typeof(IpField), new FrameworkPropertyMetadata("0.0.0.0") { BindsTwoWayByDefault = true });
 
         /// <summary>
         /// Returns the IP address as a byte array.
@@ -66,9 +54,60 @@ namespace IPUserControls
         }
 
         public static readonly DependencyProperty IpAddressBytesProperty =
-            DependencyProperty.Register("IpAddressBytes", typeof(byte[]), typeof(IpField), new FrameworkPropertyMetadata(new byte[ushort.MaxValue]){BindsTwoWayByDefault = true});
+            DependencyProperty.Register("IpAddressBytes", typeof(byte[]), typeof(IpField), new FrameworkPropertyMetadata(new byte[4]) { BindsTwoWayByDefault = true });
 
         #endregion Exposed Properties
+
+        private void UpdateIpAddress()
+        {
+            IpAddress =
+                _ipFirstByte.StringToByte() + "." +
+                _ipSecondByte.StringToByte() + "." +
+                _ipThirdByte.StringToByte() + "." +
+                _ipFourthByte.StringToByte();
+        }
+
+        private void UpdateIpAddressBytes()
+        {
+            var ipBytes = new[]
+            {
+                IpFirstByte.StringToByte(),
+                IpSecondByte.StringToByte(),
+                IpThirdByte.StringToByte(),
+                IpFourthByte.StringToByte()
+            };
+
+            IpAddressBytes = ipBytes;
+        }
+
+        private void SetIpByteProperty(ref string backingField, string value, string property)
+        {
+            // Remove these chars as they will parse as valid numbers
+            // and can show "000", "+2" etc. in the text box.
+            value = value
+                .RemoveWhitespace()
+                .RemoveNumberSigns()
+                .RemoveLeadingZerosInByte();
+
+            // When deleting the text box input, an empty char is sent in.
+            // Set to Zero in this case.
+            if (value == "" && backingField != "0")
+                backingField = "0";
+
+            // Handles non-numbers
+            else if (!value.IsNumber())
+                return;
+
+            // Handles valid byte-input 
+            else if (value.IsByte())
+                backingField = value;
+            
+            // Is number but not a byte
+            else
+                return;
+
+            OnPropertyChanged(property);
+        }
 
         #region Properties
 
@@ -82,23 +121,9 @@ namespace IPUserControls
             get => _ipFirstByte;
             set
             {
-                if (value == _ipFirstByte) return;
-
-                ParseIpByteInput(ref value);
-
-                if (!IsByte(value))
-                    _ipFirstByte = value;
-                else if (IsNumber(value))
-                    return;
-
-                if (value == "")
-                {
-                    if (_ipFirstByte == "0") return;
-                    _ipFirstByte = "0";
-                }
-
-                OnPropertyChanged();
+                SetIpByteProperty(ref _ipFirstByte, value, nameof(IpFirstByte));
                 UpdateIpAddress();
+                UpdateIpAddressBytes();
             }
         }
 
@@ -112,9 +137,9 @@ namespace IPUserControls
             get => _ipSecondByte;
             set
             {
-                UpdateIpByte(ref _ipSecondByte, value, nameof(IpSecondByte));
-                UpdateIpAddressBytes();
+                SetIpByteProperty(ref _ipSecondByte, value, nameof(IpSecondByte));
                 UpdateIpAddress();
+                UpdateIpAddressBytes();
             }
         }
 
@@ -128,9 +153,9 @@ namespace IPUserControls
             get => _ipThirdByte;
             set
             {
-                UpdateIpByte(ref _ipThirdByte, value, nameof(IpThirdByte));
-                UpdateIpAddressBytes();
+                SetIpByteProperty(ref _ipThirdByte, value, nameof(IpThirdByte));
                 UpdateIpAddress();
+                UpdateIpAddressBytes();
             }
         }
 
@@ -144,125 +169,53 @@ namespace IPUserControls
             get => _ipFourthByte;
             set
             {
-                UpdateIpByte(ref _ipFourthByte, value, nameof(IpFourthByte));
-                UpdateIpAddressBytes();
+                SetIpByteProperty(ref _ipFourthByte, value, nameof(IpFourthByte));
+                OnPropertyChanged();
                 UpdateIpAddress();
             }
         }
 
         #endregion Properties
 
-        #region Methods
-
-        private void UpdateIpAddress()
-        {
-            IpAddress =
-                StringToByte(_ipFirstByte)  + "." +
-                StringToByte(_ipSecondByte) + "." +
-                StringToByte(_ipThirdByte)  + "." +
-                StringToByte(_ipFourthByte) + ".";
-        }
-
-        private void UpdateIpAddressBytes()
-        {
-            var ipBytes = new[]
-            {
-                StringToByte(IpFirstByte),
-                StringToByte(IpSecondByte),
-                StringToByte(IpThirdByte),
-                StringToByte(IpFourthByte)
-            };
-
-            IpAddressBytes = ipBytes;
-        }
-
-        private void UpdateIpByte(ref string backingField, string value, string property)
-        {
-            ParseIpByteInput(ref value);
-
-            if (value == backingField) return;
-
-            if (IsByte(value))
-                backingField = value;
-            else if (IsNumber(value))
-                return;
-
-            if (value == "")
-            {
-                if (backingField == "0") return;
-                backingField = "0";
-            }
-
-            OnPropertyChanged(property);
-        }
-
-        /// <summary>
-        /// Removes whitespace, leading 0's and '+', '-' signs.
-        /// These are characters that would be legal to pass in
-        /// otherwise, and be evaluated as correct numbers.
-        /// <example>
-        /// // All of the strings below will equal to a valid number.
-        /// string nrStr1 = "002";
-        /// string nrStr2 = "-001";
-        /// string nrStr3 = "+20";
-        /// string nrStr4 = " 123";
-        /// isNumber(nrStr1); // Same for nrStrX...
-        /// </example>
-        /// </summary>
-        /// <param name="input"></param>
-        private static void ParseIpByteInput(ref string input)
-        {
-            while (input.Contains(" ")) input = input.Replace(" ", "");
-            while (input.Contains("-")) input = input.Replace("-", "");
-            while (input.Contains("+")) input = input.Replace("+", "");
-            while (input.StartsWith("0") && input.Length > 1) input = input.Remove(0, 1);
-        }
-        
-        private bool IsNumber(string input)
-        {
-            return int.TryParse(input, out _);
-        }
-
-        private bool IsByte(string input)
-        {
-            return byte.TryParse(input, out _);
-        }
-
-        /// <summary>
-        /// Returns a byte from a string representation. If the string is
-        /// an invalid number or bigger than a byte, the result returned is 0.
-        /// </summary>
-        private static byte StringToByte(string input)
-        {
-            return byte.TryParse(input, out var result) ? result : (byte)0;
-        }
-
-        /// <summary>
-        /// The purpose of this is to validate the potential incoming IP address
-        /// from an app consuming this User Control.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns>True if the string is a valid IP address.</returns>
-        private bool IsValidIpAddress(string value)
-        {
-            var ipAddressCheck = new Regex(@"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"); // Does not validate leading 0's
-            return ipAddressCheck.IsMatch(value);
-        }
-
-        #endregion Methods
-
         #region Events
 
         // Select All Text On Keyboard Focus
-        // ---------------------------------
-        private void FirstByteTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e) => FirstByteTextBox.SelectAll();
+        private void FirstByteTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => FirstByteTextBox.SelectAll();
+        private void SecondByteTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => SecondByteTextBox.SelectAll();
+        private void ThirdByteTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => ThirdByteTextBox.SelectAll();
+        private void FourthByteTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => FourthByteTextBox.SelectAll();
 
-        private void SecondByteTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e) => SecondByteTextBox.SelectAll();
-
-        private void ThirdByteTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e) => ThirdByteTextBox.SelectAll();
-
-        private void FourthByteTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e) => FourthByteTextBox.SelectAll();
-
+        // Shift text box focus on key down events
+        private void FirstByteTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e) => ShiftTextBoxFocus((TextBox)sender, e);
+        private void SecondByteTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e) => ShiftTextBoxFocus((TextBox)sender, e);
+        private void ThirdByteTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e) => ShiftTextBoxFocus((TextBox)sender, e);
+        private void FourthByteTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e) => ShiftTextBoxFocus((TextBox)sender, e);
+        
+        private static void ShiftTextBoxFocus (TextBox textBox, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.OemPeriod:
+                case Key.Enter:
+                    textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
+                    if (textBox.Text == "0")
+                        textBox.Text = "";
+                    break;
+                case Key.Right:
+                {
+                    if (textBox.CaretIndex == textBox.Text.Length)
+                        textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right)); ;
+                    break;
+                }
+                case Key.Back:
+                case Key.Left:
+                {
+                    if (textBox.CaretIndex == 0)
+                        textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Left));
+                    break;
+                }
+            }
+        }
         #endregion Events
 
         #region Property Notifications

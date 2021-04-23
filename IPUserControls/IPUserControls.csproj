@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionStatus.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="IpField.xaml.cs">
       <DependentUpon>IpField.xaml</DependentUpon>
     </Compile>

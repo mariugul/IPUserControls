@@ -14,7 +14,7 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="IP Address" />
                 <ip:IpField Name="IpField"/>
-                <ip:IpPort  Name="IpPort" DefaultPortNumber="10" VerticalAlignment="Center"/>
+                <ip:IpPort  Name="IpPort" VerticalAlignment="Center"/>
                 <ip:IpStatus Name="IpStatus" />
                 <Button Name="ConnectionButton" Content="Connect" Click="Button_Click" />
             </StackPanel>
