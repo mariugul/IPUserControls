@@ -11,8 +11,10 @@ namespace Prototyping_Prism.ViewModels
         public MainWindowViewModel()
         {
             ButtonClickCommand = new DelegateCommand(ButtonClick);
+            ButtonIpChangeCommand = new DelegateCommand(IpChangeButtonClick);
         }
-        
+
+
         private string _title = "Prism Application";
 
         public string Title
@@ -21,7 +23,7 @@ namespace Prototyping_Prism.ViewModels
             set => SetProperty(ref _title, value);
         }
 
-        private string _ipAddress;
+        private string _ipAddress = "0.0.0.0";
 
         public string IpAddress
         {
@@ -42,6 +44,13 @@ namespace Prototyping_Prism.ViewModels
         {
             get => _connectionStatus;
             set => SetProperty(ref _connectionStatus, value);
+        }
+
+        public DelegateCommand ButtonIpChangeCommand { get; private set; }
+
+        private void IpChangeButtonClick()
+        {
+            IpAddress = "100.100.100.100";
         }
 
         public DelegateCommand ButtonClickCommand { get; private set; }

@@ -37,8 +37,33 @@ namespace IPUserControls
             }
         }
 
-        public static readonly DependencyProperty IpAddressProperty =
-            DependencyProperty.Register("IpAddress", typeof(string), typeof(IpField), new FrameworkPropertyMetadata("0.0.0.0") { BindsTwoWayByDefault = true });
+        public static readonly DependencyProperty IpAddressProperty = DependencyProperty.Register
+        (
+            "IpAddress", 
+            typeof(string), 
+            typeof(IpField),
+            new FrameworkPropertyMetadata
+            (
+                "0.0.0.0",
+                new PropertyChangedCallback(IpChangedCallback)
+            ) { BindsTwoWayByDefault = true }
+        );
+        
+        private static void IpChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var uc = (IpField) d;
+            var ipAddress = (string)e.NewValue;
+
+            if (!ipAddress.IsValidIpAddress()) return;
+
+            var ipBytes = ipAddress.ToIpBytes();
+
+            uc.IpFirstByte = ipBytes[0].ToString();
+            uc.IpSecondByte = ipBytes[1].ToString();
+            uc.IpThirdByte = ipBytes[2].ToString();
+            uc.IpFourthByte = ipBytes[3].ToString();
+        }
+
 
         /// <summary>
         /// Returns the IP address as a byte array.
@@ -61,20 +86,20 @@ namespace IPUserControls
         private void UpdateIpAddress()
         {
             IpAddress =
-                _ipFirstByte.StringToByte() + "." +
-                _ipSecondByte.StringToByte() + "." +
-                _ipThirdByte.StringToByte() + "." +
-                _ipFourthByte.StringToByte();
+                _ipFirstByte.ToByte() + "." +
+                _ipSecondByte.ToByte() + "." +
+                _ipThirdByte.ToByte() + "." +
+                _ipFourthByte.ToByte();
         }
 
         private void UpdateIpAddressBytes()
         {
             var ipBytes = new[]
             {
-                IpFirstByte.StringToByte(),
-                IpSecondByte.StringToByte(),
-                IpThirdByte.StringToByte(),
-                IpFourthByte.StringToByte()
+                IpFirstByte.ToByte(),
+                IpSecondByte.ToByte(),
+                IpThirdByte.ToByte(),
+                IpFourthByte.ToByte()
             };
 
             IpAddressBytes = ipBytes;

@@ -85,9 +85,45 @@ namespace IPUserControls
         /// </summary>
         /// <param name="input"></param>
         /// <returns>Byte value of the string.</returns>
-        public static byte StringToByte(this string input)
+        public static byte ToByte(this string input)
         {
             return byte.TryParse(input, out var result) ? result : (byte)0;
+        }
+
+        /// <summary>
+        /// Parses a valid IP address string into a byte array of the individual numbers
+        /// between the dots of the IP.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>
+        /// Byte array containing the 4 numbers of an IP. If the
+        /// input string is an invalid IP, the returned result is a byte array of zeros.
+        /// </returns>
+        public static byte[] ToIpBytes(this string input)
+        {
+            if (!input.IsValidIpAddress()) return new byte[] {0, 0, 0, 0}; 
+
+            var ipBytes = new byte[4];
+
+            for (var i = 0; i <= 3; i++)
+            {
+                var separatorIndex = input.IndexOf('.'); // 100.100.100.100  // 0.0.0.0
+
+                // If the index '.' is not found, the value is set to -1.
+                // Because the IsValidIpAddress() has already been tested, this
+                // means that this will only happen during the last loop (i == 3).
+                if (separatorIndex == -1)
+                    separatorIndex = 0;
+
+                if (i < 3)
+                    ipBytes[i] = input.Remove(separatorIndex, input.Length - separatorIndex).ToByte();
+                else
+                    ipBytes[3] = input.ToByte();
+
+                input = input.Remove(0, separatorIndex + 1);
+            }
+
+            return ipBytes;
         }
 
         /// <summary>
