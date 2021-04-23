@@ -11,8 +11,9 @@
 | IpStatus      | IP Connection Status | Connection Status   |
 
  
+ 
 ## Usage
-1. Install the Nuget package
+1. Install the [IPUserControls](https://www.nuget.org/packages/IPUserControls.Wpf/1.1.0#) Nuget package
 2. Add this to your _SomeView.xaml_ namespace
     ```xaml
     xmlns:ip="clr-namespace:IPUserControls;assembly=IPUserControls.Wpf"
@@ -35,5 +36,6 @@
     <img src="Doc/ipStatus.png"/>
     
 4. Setting up the View in XAML shown below. I use Prism and an MVVM design. For an example on how to bind to the ViewModel, see the [Prototyping Prism](https://github.com/mariugul/IPUserControls/tree/main/Prototyping%20Prism) project in this repository. It does basic binding to get the IP, Port and set connection status.
-<img src="Doc/xamlSetUp.png"/>
+
+<img src="Doc/xamlSetUp.gif"/>
    
