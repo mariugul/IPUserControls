@@ -51,21 +51,6 @@ namespace IPUserControls
             ) {BindsTwoWayByDefault = true} 
         );
 
-
-        private ConnectionStatus _conn;
-        public ConnectionStatus Conn
-        {
-            get => _conn;
-            set => SetProperty(ref _conn, value);
-        }
-        private static object ConnectionStatusCoerceValueCallback(DependencyObject d, object basevalue)
-        {
-            Debug.WriteLine($"CoerceValueCallback: {d.DependencyObjectType} {basevalue}");
-            var uc = (IpStatus) d;
-            uc.ConnectionStatus = (ConnectionStatus) basevalue;
-            return basevalue;
-        }
-
         private static void ConnectionStatusChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Debug.WriteLine($"ConnectionStatusChangedCallback: {e.NewValue}");
