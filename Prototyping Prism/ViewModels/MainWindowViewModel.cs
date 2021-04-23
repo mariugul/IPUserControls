@@ -1,8 +1,8 @@
-﻿using Prism.Commands;
+﻿using IPUserControls;
+using Prism.Commands;
 using Prism.Mvvm;
 using System.Diagnostics;
-using System.Security.Permissions;
-using IPUserControls;
+using System.Threading;
 
 namespace Prototyping_Prism.ViewModels
 {
@@ -14,7 +14,6 @@ namespace Prototyping_Prism.ViewModels
             ButtonIpChangeCommand = new DelegateCommand(IpChangeButtonClick);
             IpAddress = "192.168.0.175";
         }
-
 
         private string _title = "Prism Application";
 
@@ -41,6 +40,7 @@ namespace Prototyping_Prism.ViewModels
         }
 
         private ConnectionStatus _connectionStatus = ConnectionStatus.Disconnected;
+
         public ConnectionStatus ConnectionStatus
         {
             get => _connectionStatus;
@@ -59,18 +59,35 @@ namespace Prototyping_Prism.ViewModels
         private void ButtonClick()
         {
             if (ConnectionStatus == ConnectionStatus.Disconnected)
+            {
+                ButtonContent = "Connecting";
+                ConnectionStatus = ConnectionStatus.Connecting;
+            }
+            else if (ConnectionStatus == ConnectionStatus.Connecting)
+            {
                 ConnectionStatus = ConnectionStatus.Connected;
+                ButtonContent = "Disconnect";
+            }
             else
+            {
                 ConnectionStatus = ConnectionStatus.Disconnected;
+                ButtonContent = "Connect";
+            }
+        }
 
+        private string _buttonContent = "Connect";
+        public string ButtonContent
+        {
+            get => _buttonContent;
+            set => SetProperty(ref _buttonContent, value);
         }
     }
 
     public enum SomeOtherConnectionStatus
     {
         Connected,
-        Disconnected, 
-        Connecting, 
+        Disconnected,
+        Connecting,
         Error
     }
 }

@@ -4,17 +4,16 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:ip="clr-namespace:IPUserControls;assembly=IPUserControls"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525">
+        Title="{Binding Title}" Height="218.122" Width="443.999">
     <Grid>
-        <StackPanel>
-            <StackPanel Orientation="Horizontal">
+        <StackPanel VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <Label Content="IP Address"></Label>
                 <ip:IpField IpAddress="{Binding IpAddress}"/>
-                <Label Content="{Binding IpAddress}"/>
-                <Button Content="Change IP" Command="{Binding ButtonIpChangeCommand}"/>
-                <ip:IpStatus ConnectionStatus="{Binding ConnectionStatus}"/>
-                <Button Content="Change Status" Command="{Binding ButtonClickCommand}"/>
-                <ip:IpPort PortNumber="500"/>
+                <ip:IpPort PortNumber="5022"/>
+                <ip:IpStatus ConnectionStatus="{Binding ConnectionStatus}" />
             </StackPanel>
+            <Button Content="{Binding  ButtonContent}" Command="{Binding ButtonClickCommand}" Width="100" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>
