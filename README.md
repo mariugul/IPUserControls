@@ -1,5 +1,7 @@
-# IPUserControls.WPF
- With these controls you get an IP Address Text Box, IP Port Text Box and IP Connection Status Icon. Combine them together for a complete IP connection control.
+# IPUserControls.Wpf
+ With these controls you get an IP Address Text Box, IP Port Text Box and IP Connection Status Icon. These are all seperate controls to allow you to place them however you want. Combine them together for a complete IP connection control.
+ 
+<img src="Doc/usage.gif"/>
  
 ## Controls Included
 | **Controls**  | **Description**      | Bindable Property   |
@@ -9,49 +11,31 @@
 | IpStatus      | IP Connection Status | Connection Status   |
 
  
+ 
 ## Usage
-1. Install the Nuget package
+1. Install the [IPUserControls](https://www.nuget.org/packages/IPUserControls.Wpf/1.1.0#) Nuget package
 2. Add this to your _SomeView.xaml_ namespace
     ```xaml
     xmlns:ip="clr-namespace:IPUserControls;assembly=IPUserControls.Wpf"
     ```
 3. Access the IP controls by typing either or all of the commands
-    ```xaml
+   
+   ```xaml
     <ip:IpField />
     ```
-    insert image
+   <img src="Doc/ipField.png"/>
     
     ```xaml
     <ip:IpPort />
     ```
-    insert image
+    <img src="Doc/ipPort.png"/>
  
     ```xaml
     <ip:IpStatus />
     ```
-    insert image
+    <img src="Doc/ipStatus.png"/>
     
-4. Minimal working example of the UI is shown below
-    ```xaml
-    <Window x:Class="NugetPackageTest.MainWindow"
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:ip="clr-namespace:IPUserControls;assembly=IPUserControls.Wpf"
-            mc:Ignorable="d"
-            Title="MainWindow"
-            Height="150"
-            Width="400">
+4. Setting up the View in XAML shown below. I use Prism and an MVVM design. For an example on how to bind to the ViewModel, see the [Prototyping Prism](https://github.com/mariugul/IPUserControls/tree/main/Prototyping%20Prism) project in this repository. It does basic binding to get the IP, Port and set connection status.
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="IP Address" Margin="0,0,10,0" />
-            <ip:IpField  />
-            <ip:IpPort   />
-            <ip:IpStatus />
-        </StackPanel>
-    </Window>
-    ```
-    
-    This should compile to
-    insert image
+<img src="Doc/xamlSetUp.gif"/>
+   
