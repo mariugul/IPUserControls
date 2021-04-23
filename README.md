@@ -23,17 +23,17 @@
    ```xaml
     <ip:IpField />
     ```
-   <img src="Doc/ipField.png"/>
+   <img src="Doc/ipField.png"/> <br><br>
     
     ```xaml
     <ip:IpPort />
     ```
-    <img src="Doc/ipPort.png"/>
+    <img src="Doc/ipPort.png"/>  <br><br>
  
     ```xaml
     <ip:IpStatus />
     ```
-    <img src="Doc/ipStatus.png"/>
+    <img src="Doc/ipStatus.png"/>  
     
 4. Setting up the View in XAML shown below. I use Prism and an MVVM design. For an example on how to bind to the ViewModel, see the [Prototyping Prism](https://github.com/mariugul/IPUserControls/tree/main/Prototyping%20Prism) project in this repository. It does basic binding to get the IP, Port and set connection status.
 
