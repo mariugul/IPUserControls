@@ -1,4 +1,4 @@
-# IPUserControls.WPF
+# IPUserControls.Wpf
  With these controls you get an IP Address Text Box, IP Port Text Box and IP Connection Status Icon. These are all seperate controls to allow you to place them however you want. Combine them together for a complete IP connection control.
  
 <img src="Doc/usage.gif"/>
