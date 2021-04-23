@@ -8,12 +8,12 @@
     <Grid>
         <StackPanel VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Label Content="IP Address"></Label>
-                <ip:IpField IpAddress="{Binding IpAddress}"/>
-                <ip:IpPort PortNumber="5022"/>
-                <ip:IpStatus ConnectionStatus="{Binding ConnectionStatus}" />
+                <!--<Label Content="IP Address"></Label>-->
+                <!--<ip:IpField IpAddress="{Binding IpAddress}"/>-->
+                <!--<ip:IpPort PortNumber="5022"/>-->
+                <ip:IpStatus ConnectionStatus="Connected" />
             </StackPanel>
-            <Button Content="{Binding  ButtonContent}" Command="{Binding ButtonClickCommand}" Width="100" Margin="10"/>
+            <!--<Button Content="{Binding  ButtonContent}" Command="{Binding ButtonClickCommand}" Width="100" Margin="10"/>-->
         </StackPanel>
     </Grid>
 </Window>
