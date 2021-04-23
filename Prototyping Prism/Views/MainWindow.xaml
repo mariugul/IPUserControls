@@ -10,6 +10,8 @@
             <StackPanel Orientation="Horizontal">
                 <ip:IpField IpAddress="{Binding IpAddress}"/>
                 <Label Content="{Binding IpAddress}"/>
+                <ip:IpStatus ConnectionStatus="{Binding ConnectionStatus}"/>
+                <Button Content="Change Status" Command="{Binding ButtonClickCommand}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

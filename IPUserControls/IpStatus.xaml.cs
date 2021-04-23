@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -38,8 +40,38 @@ namespace IPUserControls
             }
         }
 
-        public static readonly DependencyProperty ConnectionStatusProperty =
-            DependencyProperty.Register("ConnectionStatus", typeof(ConnectionStatus), typeof(IpField), new FrameworkPropertyMetadata(ConnectionStatus.Disconnected){BindsTwoWayByDefault = true});
+        public static readonly DependencyProperty ConnectionStatusProperty = DependencyProperty.Register
+        (
+            "ConnectionStatus", 
+            typeof(ConnectionStatus),
+            typeof(IpStatus), 
+            new FrameworkPropertyMetadata(
+                ConnectionStatus.Disconnected, 
+                new PropertyChangedCallback(ConnectionStatusChangedCallback)
+            ) {BindsTwoWayByDefault = true} 
+        );
+
+
+        private ConnectionStatus _conn;
+        public ConnectionStatus Conn
+        {
+            get => _conn;
+            set => SetProperty(ref _conn, value);
+        }
+        private static object ConnectionStatusCoerceValueCallback(DependencyObject d, object basevalue)
+        {
+            Debug.WriteLine($"CoerceValueCallback: {d.DependencyObjectType} {basevalue}");
+            var uc = (IpStatus) d;
+            uc.ConnectionStatus = (ConnectionStatus) basevalue;
+            return basevalue;
+        }
+
+        private static void ConnectionStatusChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Debug.WriteLine($"ConnectionStatusChangedCallback: {e.NewValue}");
+            var uc = (IpStatus)d;
+            uc.ConnectionStatus = (ConnectionStatus) e.NewValue;
+        }
 
         private string _connectionImageSource = ImageDisconnected;
 

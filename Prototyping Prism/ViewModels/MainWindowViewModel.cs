@@ -1,6 +1,8 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using System.Diagnostics;
+using System.Security.Permissions;
+using IPUserControls;
 
 namespace Prototyping_Prism.ViewModels
 {
@@ -35,11 +37,22 @@ namespace Prototyping_Prism.ViewModels
             }
         }
 
+        private ConnectionStatus _connectionStatus;
+        public ConnectionStatus ConnectionStatus
+        {
+            get => _connectionStatus;
+            set => SetProperty(ref _connectionStatus, value);
+        }
+
         public DelegateCommand ButtonClickCommand { get; private set; }
 
         private void ButtonClick()
         {
-            IpAddress = "123.123.123.123";
+            if (ConnectionStatus == ConnectionStatus.Disconnected)
+                ConnectionStatus = ConnectionStatus.Connected;
+            else
+                ConnectionStatus = ConnectionStatus.Disconnected;
+
         }
     }
 }
