@@ -7,13 +7,13 @@
         xmlns:vm ="clr-namespace:Prototyping"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
-        Title="Test Window" Height="133.733" Width="395.733">
+        Title="Test Window" Height="188.37" Width="395.733">
 
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="IP Address" />
-                <ip:IpField Name="IpField"/>
+                <ip:IpField Name="IpField" TabIndex="0"/>
                 <ip:IpPort  Name="IpPort" VerticalAlignment="Center"/>
                 <ip:IpStatus Name="IpStatus" />
                 <Button Name="ConnectionButton" Content="Connect" Click="Button_Click" />
@@ -28,6 +28,8 @@
                     <Label Content="{Binding ElementName=IpPort, Path=PortNumber}" HorizontalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
+            <Label Content="Bind To Property : "/>
+            <ip:IpField IpAddress="{Binding IpAddress , Mode=TwoWay}" />
         </StackPanel>
     </Grid>
 </Window>

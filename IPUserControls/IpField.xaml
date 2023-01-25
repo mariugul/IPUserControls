@@ -33,8 +33,9 @@
             BorderThickness="0"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            GotKeyboardFocus="FirstByteTextBox_GotKeyboardFocus"
-            PreviewKeyDown="FirstByteTextBox_OnPreviewKeyDown"/>
+            TextChanged="TextChanged" 
+            GotKeyboardFocus="OnGotKeyboardFocus"
+            PreviewKeyDown="OnPreviewKeyDown"/>
 
         <!--Second Byte-->
         <TextBox
@@ -45,8 +46,9 @@
             BorderThickness="0"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            GotKeyboardFocus="SecondByteTextBox_GotKeyboardFocus"
-            PreviewKeyDown="SecondByteTextBox_OnPreviewKeyDown"/>
+            TextChanged="TextChanged" 
+            GotKeyboardFocus="OnGotKeyboardFocus"
+            PreviewKeyDown="OnPreviewKeyDown"/>
 
         <!--Third Byte-->
         <TextBox
@@ -57,8 +59,9 @@
             BorderThickness="0"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            GotKeyboardFocus="ThirdByteTextBox_GotKeyboardFocus"
-            PreviewKeyDown="ThirdByteTextBox_OnPreviewKeyDown"/>
+            TextChanged="TextChanged" 
+            GotKeyboardFocus="OnGotKeyboardFocus"
+            PreviewKeyDown="OnPreviewKeyDown"/>
 
         <!--Fourth Byte-->
         <TextBox
@@ -70,9 +73,10 @@
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
             HorizontalAlignment="Center"
-            GotKeyboardFocus="FourthByteTextBox_GotKeyboardFocus"
-            PreviewKeyDown="FourthByteTextBox_OnPreviewKeyDown"/>
-
+            TextChanged="TextChanged" 
+            GotKeyboardFocus="OnGotKeyboardFocus"
+            PreviewKeyDown="OnPreviewKeyDown"/>
+            
         <!--Dot Separators-->
         <TextBox Grid.Column="1" Text="." VerticalAlignment="Bottom" TextAlignment="Center" BorderThickness="0" Focusable="False" />
         <TextBox Grid.Column="3" Text="." VerticalAlignment="Bottom" TextAlignment="Center" Padding="0" BorderThickness="0" Focusable="False" />
