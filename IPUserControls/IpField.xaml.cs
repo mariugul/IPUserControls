@@ -125,8 +125,10 @@ namespace IPUserControls
 
             // Handles valid byte-input 
             else if (value.IsByte())
+            {
                 backingField = value;
-            
+            }
+
             // Is number but not a byte
             else
                 return;
@@ -205,16 +207,10 @@ namespace IPUserControls
         #region Events
 
         // Select All Text On Keyboard Focus
-        private void FirstByteTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => FirstByteTextBox.SelectAll();
-        private void SecondByteTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => SecondByteTextBox.SelectAll();
-        private void ThirdByteTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => ThirdByteTextBox.SelectAll();
-        private void FourthByteTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => FourthByteTextBox.SelectAll();
+        private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => (sender as TextBox).SelectAll();
 
         // Shift text box focus on key down events
-        private void FirstByteTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e) => ShiftTextBoxFocus((TextBox)sender, e);
-        private void SecondByteTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e) => ShiftTextBoxFocus((TextBox)sender, e);
-        private void ThirdByteTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e) => ShiftTextBoxFocus((TextBox)sender, e);
-        private void FourthByteTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e) => ShiftTextBoxFocus((TextBox)sender, e);
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e) => ShiftTextBoxFocus((TextBox)sender, e);
         
         private static void ShiftTextBoxFocus (TextBox textBox, KeyEventArgs e)
         {
@@ -233,12 +229,32 @@ namespace IPUserControls
                     break;
                 }
                 case Key.Back:
+                    if (textBox.SelectedText.Length != textBox.Text.Length)
+                    {
+                        if (textBox.CaretIndex == 0)
+                            textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Left));
+                    }
+                    else
+                    {
+                        textBox.Text = string.Empty;
+                    }
+                    break;
                 case Key.Left:
                 {
-                    if (textBox.CaretIndex == 0)
-                        textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Left));
+                            if (textBox.CaretIndex == 0)
+                                textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Left));
                     break;
                 }
+            }
+        }
+        private void TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox.Text.Length == 3)
+            {
+                textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
+                if (textBox.Text == "0")
+                    textBox.Text = "";
             }
         }
         #endregion Events

@@ -13,11 +13,13 @@ namespace Prototyping
     {
         public MainWindow()
         {
+            IpAddress = "127.0.0.1";
             InitializeComponent();
         }
-
+        public string IpAddress { get; set; }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(IpAddress);
             if (IpStatus.ConnectionStatus != ConnectionStatus.Connected)
                 Connect();
             else
